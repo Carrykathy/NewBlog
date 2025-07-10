@@ -11,7 +11,13 @@ import (
 	"net/http"
 )
 
-// 获取多个文章标签
+// @Summary 获取标签列表
+// @Produce json
+// @Param name query string false "标签名称"
+// @Param state query int false "状态 (0:禁用, 1:启用)"
+// @Success 200 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /api/v1/tags [get]
 func GetTags(c *gin.Context) {
 	name := c.Query("name")
 
@@ -40,7 +46,15 @@ func GetTags(c *gin.Context) {
 	})
 }
 
-// 新增文章标签
+// @Summary 新增标签
+// @Produce json
+// @Param name query string true "标签名称"
+// @Param created_by query string true "创建人"
+// @Param state query int true "状态 (0:禁用, 1:启用)"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /api/v1/tags [post]
 func AddTag(c *gin.Context) {
 	name := c.Query("name")
 	state := com.StrTo(c.Query("state")).MustInt()
@@ -69,7 +83,16 @@ func AddTag(c *gin.Context) {
 	})
 }
 
-// 编辑文章标签
+// @Summary 编辑标签
+// @Produce json
+// @Param id path int true "标签ID"
+// @Param name query string false "新名称"
+// @Param modified_by query string true "修改人"
+// @Param state query int false "新状态"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /api/v1/tags/{id} [put]
 func EditeTag(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 	name := c.Query("name")
@@ -112,7 +135,13 @@ func EditeTag(c *gin.Context) {
 	})
 }
 
-// 删除文章标签
+// @Summary 删除标签
+// @Produce json
+// @Param id path int true "标签ID"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]interface{}
+// @Failure 500 {object} map[string]interface{}
+// @Router /api/v1/tags/{id} [delete]
 func DeleteTag(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
 
