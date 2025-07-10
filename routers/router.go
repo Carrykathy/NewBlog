@@ -3,10 +3,12 @@ package routers
 import (
 	_ "NewBlog/docs"
 	"NewBlog/pkg/setting"
+	"NewBlog/pkg/upload"
 	"NewBlog/routers/api"
 	v1 "NewBlog/routers/api/v1"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
 
 	"NewBlog/middleware/jwt"
 	"github.com/gin-gonic/gin"
@@ -20,6 +22,8 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 
 	gin.SetMode(setting.ServerSetting.RunMode)
+
+	r.StaticFS("/upload/images", http.Dir(upload.GetImageFullPath()))
 
 	r.GET("/auth", api.GetAuth)
 
