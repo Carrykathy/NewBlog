@@ -18,6 +18,8 @@ type Article struct {
 	CreatedBy  string `json:"created_by"`
 	ModifiedBy string `json:"modified_by"`
 	State      int    `json:"state"`
+
+	DeletedOn int `json:"deleted_on"`
 }
 
 func ExistArticleByID(id int) bool {
